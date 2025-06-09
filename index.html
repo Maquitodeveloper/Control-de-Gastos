@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Control de Gastos</title>
+  <!-- Bootstrap CSS (puedes cambiarlo o complementarlo con Tailwind CSS) -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Archivo de estilos personalizado -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-theme="light">
+  <!-- Navegación -->
+  <nav class="navbar navbar-expand-lg navbar-light mb-4">
+    <a class="navbar-brand" href="#">Mis Finanzas</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="#dashboard">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="#registro">Transacciones</a></li>
+        <li class="nav-item"><a class="nav-link" href="#perfil">Perfil</a></li>
+        <li class="nav-item"><a class="nav-link" href="#reportes">Reportes</a></li>
+        <li class="nav-item">
+          <button id="toggleTheme" class="btn btn-outline-secondary btn-sm">🌙</button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- Dashboard Principal -->
+    <section id="dashboard">
+      <h2>Dashboard Principal</h2>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="chart-container">
+            <canvas id="barChart"></canvas>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="chart-container">
+            <canvas id="lineChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="chart-container">
+        <canvas id="pieChart"></canvas>
+      </div>
+      <div class="row text-center">
+        <div class="col-md-4">
+          <div class="alert alert-primary">
+            <strong>Saldo Disponible:</strong> $<span id="saldoDisponible">0</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="alert alert-danger">
+            <strong>Gastos Totales:</strong> $<span id="totalEgreso">0</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="alert alert-success">
+            <strong>Ingresos Totales:</strong> $<span id="totalIngreso">0</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Registro de Transacciones -->
+    <section id="registro" class="mt-5">
+      <h2>Registro de Transacciones</h2>
+      <form id="transactionForm" class="mb-4">
+        <div class="form-row">
+          <div class="form-group col-md-3">
+            <label for="transactionName">Nombre</label>
+            <input type="text" class="form-control" id="transactionName" placeholder="Ej. Hamburguesa">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="transactionAmount">Monto</label>
+            <input type="number" class="form-control" id="transactionAmount" placeholder="Ej. 50">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="transactionCategory">Categoría</label>
+            <select id="transactionCategory" class="form-control">
+              <option selected>Seleccionar...</option>
+              <option value="Alimentación">Alimentación</option>
+              <option value="Transporte">Transporte</option>
+              <option value="Entretenimiento">Entretenimiento</option>
+              <option value="Otros">Otros</option>
+              <option value="Ahorros">Ahorros</option>
+            </select>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="transactionType">Tipo</label>
+            <select id="transactionType" class="form-control">
+              <option selected>Seleccionar...</option>
+              <option value="Ingreso">Ingreso</option>
+              <option value="Egreso">Egreso</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Agregar Transacción</button>
+      </form>
+      <!-- Listado de Transacciones -->
+      <div id="transactionList">
+        <h3>Historial de Transacciones</h3>
+        <ul class="list-group"></ul>
+      </div>
+    </section>
+
+    <!-- Perfil -->
+    <section id="perfil" class="mt-5">
+      <h2>Mi Perfil</h2>
+      <p>Aquí puedes ver un resumen de tus ingresos y egresos, así como información adicional de tu cuenta.</p>
+      <!-- Se puede ampliar con más datos de usuario, configuración, etc. -->
+      <div class="card">
+        <div class="card-body">
+          <p><strong>Nombre de Usuario:</strong> Maquito developer</p>
+          <p><strong>Email:</strong> maquito@gmail.com</p>
+          <p><strong>Ingresos Totales:</strong> $<span id="perfilIngreso">0</span></p>
+          <p><strong>Gastos Totales:</strong> $<span id="perfilEgreso">0</span></p>
+          <p><strong>Saldo Disponible:</strong> $<span id="perfilSaldo">0</span></p>
+          <p><strong>Ahorros:</strong> $<span id="Ahorros">0</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reportes y Estadísticas -->
+    <section id="reportes" class="mt-5">
+      <h2>Reportes y Estadísticas</h2>
+      <div class="card">
+        <div class="card-body">
+          <p>Aquí se mostrarán reportes detallados y análisis estadísticos de tus gastos a lo largo del tiempo. Utiliza los filtros disponibles para seleccionar periodos personalizados o categorías específicas.</p>
+          <!-- Integrar gráficos adicionales, tablas o filtros según se requiera -->
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Librería Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- jQuery y Bootstrap Bundle (incluye Popper) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <!-- Archivo de JavaScript-->
+  <script src="script.js"></script>
+</body>
+</html>
